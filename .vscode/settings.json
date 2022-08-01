@@ -1,0 +1,6 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "c:\\Users\\Helis\\Desktop\\Helis\\mysql-connector-java-8.0.11.jar"
+    ]
+}
