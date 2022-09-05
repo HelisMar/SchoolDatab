@@ -1,4 +1,6 @@
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Database {
@@ -68,8 +70,58 @@ public boolean CheckSubject(String subjectName) throws SQLException {
     }
     return found;
 }
+
 public void AddStudent(String studentName, int studentClass, String sandm, String extra) throws SQLException {
-    sql = "INSERT INTO school.students (Name, Class, Subject, Info) VALUES ('" + studentName +"', " + studentClass +",'" + sandm + "', '" + extra + "');";
-    ResultSet results = stmt.executeQuery(sql);
+    sql = String.format("INSERT INTO school.students (`Name`, `Class`, `Subject`, `Info`) VALUES ('%s', %d,'%s','%s');", studentName, studentClass, sandm, extra);
+    stmt.executeUpdate(sql);
 }
+
+public int GetSubjectID(String subjectName) throws SQLException {
+    int found = -1;
+    sql = "SELECT ID FROM school.subjects WHERE Name = '" + subjectName + "';";
+    ResultSet results = stmt.executeQuery(sql);
+    while(results.next()) { 
+        found = results.getInt("ID");
+    }
+    return found;
+}
+
+
+public List<String> GetAllSubjects() throws SQLException {
+    List<String> output = new ArrayList<>();
+    sql = "SELECT Name FROM school.subjects;";
+    ResultSet results = stmt.executeQuery(sql);
+    while(results.next()) { 
+        output.add(results.getString("Name"));
+    }
+    return output;
+}
+
+public List<String> GetCurrentTeacherSubjects(int teacherID) throws SQLException {
+    List<String> output = new ArrayList<>();
+    sql = "SELECT Name FROM school.subjects WHERE Teacher = " + teacherID + ";";
+    ResultSet results = stmt.executeQuery(sql);
+    while(results.next()) { 
+        output.add(results.getString("Name"));
+    }
+    return output;
+}
+
+public int GetTeacherID(String name) throws SQLException {
+    int output = -1;
+    sql = "SELECT ID FROM school.teachers WHERE Name = '" + name + "';";
+    ResultSet results = stmt.executeQuery(sql);
+    while(results.next()) { 
+        output = results.getInt("ID");
+    }
+    return output;
+}
+
+public void DeleteStudent(String studentName, int studentID) throws SQLException {
+    sql = "DELETE FROM school.students WHERE (`students`,`ID`) VALUES (' " + studentName + "', " + studentID + "); ";
+    stmt.executeUpdate(sql);
+}
+
+
+ 
 }

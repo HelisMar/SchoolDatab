@@ -10,7 +10,7 @@ public class App {
       //  db.Test();
       Teacher teacher = new Teacher();
 
-        teacher.Login();//Peab küsima kasutaja nime ja ütlema, et logisid sisse
+        teacher.Login();           //Peab küsima kasutaja nime ja ütlema, et logisid sisse
         if(teacher.isLoggedIn) {  //System.out.println(String.format("%s(%s) - Küsimus?", teacher.name, teacher.isAdmin));
         Actions(teacher);
         /*PrintNewQuestion(teacher, "Sisesta valik: ");
@@ -36,13 +36,13 @@ public class App {
               System.out.println(input);
               break;
             case 2:
-            System.out.println(input);
+            Teacher.ActionShowTeacherSubjects();
               break;
             case 3:
             Teacher.ActionAddStudent();
               break;
             case 4:
-            System.out.println(input);
+            Teacher.ActionDeleteStudent();
              break;
             case 5:
             Teacher.ActionAddSubject();
@@ -89,6 +89,16 @@ public class App {
         }      
     }  
   }
+  public static void PrintChoices(Teacher teacher) {
+    String[] choices = {"Lisaküsimus", "Vaadata õpilasi kelle ained ta õpetab", "Vaadata ained mida ta õpetab", "Lisada õpilasi", "Kustutada õpilasi", "Lisada aineid", "Kustutada aineid"};
+    for (int i = 0; i < choices.length; i++) {
+        System.out.println((i + 1) + ". " + choices[i]);
+        maxQuestion = (i + 1);
+        if(!teacher.isAdmin && i == 2) { // Kui tuleb 2 küsimus mine tsüklist välja
+            break;
+        }
+    }
+}
 
   public static void PrintNewQuestion(Teacher teacher, String question) {
     /*if(teacher.isAdmin) {
